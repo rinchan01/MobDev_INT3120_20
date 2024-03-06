@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/item1"
+        android:title="Search"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="android.widget.SearchView"/>
+
+    <item android:id="@+id/item2"
+        android:title="Item2"
+        android:orderInCategory="100"
+        app:showAsAction="withText" />
+
+    <item android:id="@+id/item3"
+        android:title="Item3"
+        android:orderInCategory="100"
+        app:showAsAction="withText" />
+
+    <item android:id="@+id/item4"
+        android:title="Item4"
+        android:orderInCategory="100"
+        app:showAsAction="withText" />
+
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="none">
+
+        <item android:id="@+id/item5"
+            android:title="Item5"
+            android:orderInCategory="100"
+            app:showAsAction="withText" />
+
+
+        <item android:id="@+id/item6"
+            android:title="Item6"
+            android:icon="@drawable/abc_vector_test"
+            android:orderInCategory="100"
+            app:showAsAction="collapseActionView" >
+
+            <menu>
+                <item android:id="@+id/item6.1" android:title="item 6.1"/>
+                <item android:id="@+id/item6.2" android:title="item 6.2"/>
+            </menu>
+
+        </item>
+    </group>
+
+</menu>
