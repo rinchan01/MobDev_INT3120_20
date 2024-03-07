@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">App1</string>
+    <string name="name">Enter your Name</string>
+    <string name="enter_your_phone_number">Enter your phone number</string>
+    <string name="radio1">Cheese</string>
+    <string name="radio2">2 x Cheese</string>
+    <string name="radio3">None</string>
+    <string name="radio4">Square</string>
+    <string name="radio5">Round</string>
+    <string name="checkbox1">Pepperoni</string>
+    <string name="checkbox2">Mushroom</string>
+    <string name="checkbox3">Veggies</string>
+    <string name="order">Your ordering:</string>
+    <string name="exit">EXIT</string>
+    <string name="order_button">SMS - PLACE YOUR ORDER</string>
+    <string name="goToOrder">Order</string>
+    <string name="goToTest">Test</string>
+    <string name="menu_item1">Exercise</string>
+    <string name="menu_item2">Sending email</string>
+    <string name="menu_item3">Open web</string>
+    <string name="menu_item4">Explicit youtube</string>
+    <string name="menu_item5">Sending Object</string>
+    <string name="person_info">Name: %1$s\nAge: %2$d</string>
+</resources>
