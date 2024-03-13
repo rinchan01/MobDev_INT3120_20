@@ -35,23 +35,23 @@
 
     <TextView
         android:id="@+id/textViewForUsername"
-        android:layout_width="296dp"
-        android:layout_height="32dp"
+        android:layout_width="356dp"
+        android:layout_height="53dp"
         android:layout_constraintBottom_toTopOf="@id/username"
         android:layout_constraintTop_toBottomOf="@id/gameName"
         android:layout_constraintStart_toStartOf="@id/gameName"
         android:layout_marginTop="150dp"
         android:fontFamily="@font/mon_italic"
         android:text="Type in your username:"
-        android:textSize="20sp"
         android:textColor="@color/white"
+        android:textSize="28sp"
         app:layout_constraintStart_toStartOf="@+id/gameName"
         app:layout_constraintTop_toBottomOf="@+id/gameName" />
 
     <EditText
         android:id="@+id/username"
-        android:layout_width="295dp"
-        android:layout_height="52dp"
+        android:layout_width="359dp"
+        android:layout_height="47dp"
         android:backgroundTint="@color/white"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/btnLogin"
@@ -60,12 +60,11 @@
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="291dp"
-        android:layout_height="45dp"
+        android:layout_width="327dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="20dp"
         android:layout_constraintBottom_toBottomOf="@id/gameName"
-
         android:text="Login"
-        app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="@+id/username"
         app:layout_constraintStart_toStartOf="@+id/username"
         app:layout_constraintTop_toBottomOf="@+id/username" />

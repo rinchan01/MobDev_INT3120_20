@@ -23,5 +23,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, HelpActivity::class.java)
             startActivity(intent)
         }
+        val shop = findViewById<Button>(R.id.shopButton)
+        shop.setOnClickListener {
+            val intent = Intent(this, ShopActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
