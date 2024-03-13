@@ -29,5 +29,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, ShopActivity::class.java))
         }
 
+        findViewById<Button>(R.id.settings_button).setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
+
     }
 }
