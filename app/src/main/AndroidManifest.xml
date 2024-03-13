@@ -19,6 +19,9 @@
         <activity android:name=".HelpActivity"
             android:exported="false"/>
 
+        <activity android:name=".ShopActivity"
+            android:exported="false"/>
+
         <activity android:name="com.example.planegame.MainActivity"
             android:exported="true">
             <intent-filter>

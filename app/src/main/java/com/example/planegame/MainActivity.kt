@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
@@ -23,5 +24,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, HelpActivity::class.java)
             startActivity(intent)
         }
+
+        findViewById<Button>(R.id.skin_shop).setOnClickListener {
+            startActivity(Intent(this, ShopActivity::class.java))
+        }
+
     }
 }

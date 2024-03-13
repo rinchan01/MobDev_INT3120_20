@@ -17,6 +17,18 @@
         tools:ignore="MissingConstraints" />
 
     <Button
+        android:id="@+id/skin_shop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Skin Shop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/helpButton"
+        app:layout_constraintVertical_bias="0.131"
+        tools:ignore="MissingConstraints" />
+
+    <Button
         android:id="@+id/helpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
