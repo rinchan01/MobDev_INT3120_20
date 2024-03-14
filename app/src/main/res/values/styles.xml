@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="Theme.AppBaseTheme" parent="@android:style/Theme.Light">
+        <item name="android:editTextColor">#295055</item>
+        <item name="android:textColorPrimary">#295055</item>
+        <item name="android:textColorSecondary">#295055</item>
+        <item name="android:textColorTertiary">#295055</item>
+        <item name="android:textColorPrimaryInverse">#295055</item>
+        <item name="android:textColorSecondaryInverse">#295055</item>
+        <item name="android:textColorTertiaryInverse">#295055</item>
+        <item name="android:windowBackground">@drawable/bg2</item>
+    </style>
     <style name="ShapeAppearance.Overlay.App.Circle" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
