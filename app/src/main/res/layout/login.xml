@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg2">
+
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="252dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="@font/mon_italic"
+        android:text="Welcome to"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toTopOf="@+id/gameName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.431"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/gameName"
+        android:layout_width="327dp"
+        android:layout_height="214dp"
+        android:fontFamily="@font/mon_bold_italic"
+        android:text="Plane Game!"
+        android:textColor="@color/white"
+        android:textSize="80sp"
+        app:layout_constraintStart_toStartOf="@+id/welcome"
+        app:layout_constraintTop_toBottomOf="@+id/welcome" />
+
+    <TextView
+        android:id="@+id/textViewForUsername"
+        android:layout_width="356dp"
+        android:layout_height="53dp"
+        android:layout_constraintBottom_toTopOf="@id/username"
+        android:layout_constraintTop_toBottomOf="@id/gameName"
+        android:layout_constraintStart_toStartOf="@id/gameName"
+        android:layout_marginTop="150dp"
+        android:fontFamily="@font/mon_italic"
+        android:text="Type in your username:"
+        android:textColor="@color/white"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="@+id/gameName"
+        app:layout_constraintTop_toBottomOf="@+id/gameName" />
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="359dp"
+        android:layout_height="47dp"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
+        app:layout_constraintStart_toStartOf="@id/textViewForUsername"
+        app:layout_constraintTop_toBottomOf="@id/textViewForUsername" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="327dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="20dp"
+        android:layout_constraintBottom_toBottomOf="@id/gameName"
+        android:text="Login"
+        app:layout_constraintEnd_toEndOf="@+id/username"
+        app:layout_constraintStart_toStartOf="@+id/username"
+        app:layout_constraintTop_toBottomOf="@+id/username" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
