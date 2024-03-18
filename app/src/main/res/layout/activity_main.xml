@@ -8,44 +8,44 @@
 
     <TextView
         android:id="@+id/welcome"
-        android:layout_width="252dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="150dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
         android:layout_marginBottom="12dp"
         android:fontFamily="@font/mon_italic"
         android:text="Welcome to"
         android:textColor="@color/white"
-        android:textSize="40sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/gameName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.388"
+        app:layout_constraintHorizontal_bias="0.223"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/gameName"
-        android:layout_width="327dp"
-        android:layout_height="214dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
         android:fontFamily="@font/mon_bold_italic"
         android:text="Plane Game!"
         android:textColor="@color/white"
-        android:textSize="80sp"
+        android:textSize="60sp"
         app:layout_constraintStart_toStartOf="@+id/welcome"
         app:layout_constraintTop_toBottomOf="@+id/welcome" />
 
     <Button
         android:id="@+id/startGameButton"
-        android:layout_width="294dp"
-        android:layout_height="77dp"
+        android:layout_width="296dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
         android:text="Start"
-        android:layout_marginTop="80dp"
-        app:layout_constraintTop_toBottomOf="@+id/gameName"
-        app:layout_constraintEnd_toEndOf="@+id/gameName"
-        app:layout_constraintStart_toStartOf="@+id/gameName" />
+        app:layout_constraintStart_toStartOf="@+id/gameName"
+        app:layout_constraintTop_toBottomOf="@+id/gameName" />
     <Button
         android:id="@+id/shopButton"
-        android:layout_width="294dp"
-        android:layout_height="77dp"
+        android:layout_width="296dp"
+        android:layout_height="60dp"
         android:text="Shop"
         android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@+id/startGameButton"
@@ -53,8 +53,8 @@
         app:layout_constraintStart_toStartOf="@+id/startGameButton" />
     <Button
         android:id="@+id/leaderboardButton"
-        android:layout_width="294dp"
-        android:layout_height="77dp"
+        android:layout_width="296dp"
+        android:layout_height="60dp"
         android:text="Leaderboard"
         android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@+id/shopButton"
@@ -63,8 +63,8 @@
 
     <Button
         android:id="@+id/settingButton"
-        android:layout_width="294dp"
-        android:layout_height="77dp"
+        android:layout_width="296dp"
+        android:layout_height="60dp"
         android:layout_marginTop="10dp"
         android:text="Settings"
         app:layout_constraintTop_toBottomOf="@+id/leaderboardButton"
@@ -72,8 +72,8 @@
         app:layout_constraintStart_toStartOf="@+id/leaderboardButton" />
     <Button
         android:id="@+id/helpButton"
-        android:layout_width="294dp"
-        android:layout_height="77dp"
+        android:layout_width="296dp"
+        android:layout_height="60dp"
         android:layout_marginTop="10dp"
         android:text="Help"
         app:layout_constraintTop_toBottomOf="@+id/settingButton"
