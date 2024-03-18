@@ -5,12 +5,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.example.planegame.gameplay.AndroidLauncher
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        findViewById<Button>(R.id.startGameButton).setOnClickListener {
+            startActivity(Intent(this, AndroidLauncher::class.java))
+        }
 
         val leaderboard = findViewById<Button>(R.id.leaderboardButton)
         leaderboard.setOnClickListener {
