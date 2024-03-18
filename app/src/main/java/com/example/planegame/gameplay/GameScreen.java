@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -19,22 +20,25 @@ public class GameScreen implements Screen {
     private Camera camera;
     private Viewport viewport;
     private SpriteBatch batch;
-    private TextureAtlas textureAtlas;
+    public static TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("game_assets/game_assets.atlas"));
     private TextureRegion[] backgrounds = new TextureRegion[4];
     private TextureRegion playerShipTextureRegion, enemyShipTextureRegion, enemyBulletTextureRegion, playerBulletTextureRegion;
     private float[] backgroundOffsets = {0, 0, 0, 0};
     private float backgroundMaxScrollingSpeed;
     private final int WORLD_WIDTH = 72;
     private final int WORLD_HEIGHT = 128;
+    private int maxEnemies = 4;
     private final float TOUCH_MOVEMENT_THRESHOLD = 0.5f;
-    private Ship playerShip;
-    private Ship enemyShip;
+    private float timeBetweenEnemySpawns = 2f;
+    private float enemySpawnTimer = 0;
+    private PlayerShip playerShip;
+    private LinkedList<EnemyShip> enemyShips = new LinkedList<>();
     private LinkedList<Bullet> playerBullets = new LinkedList<>();
     private LinkedList<Bullet> enemyBullets = new LinkedList<>();
+    private LinkedList<Explosion> explosions = new LinkedList<>();
     GameScreen() {
         camera = new OrthographicCamera();
         viewport = new StretchViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
-        textureAtlas = new TextureAtlas(Gdx.files.internal("game_assets/game_assets.atlas"));
 
         backgrounds[0] = textureAtlas.findRegion("Starscape00");
         backgrounds[1] = textureAtlas.findRegion("Starscape01");
@@ -51,7 +55,6 @@ public class GameScreen implements Screen {
         enemyShipTextureRegion.flip(false, true);
 
         playerShip = new PlayerShip(WORLD_WIDTH / 2, WORLD_HEIGHT/4, 15, 23.4f, 30, 100, 2, 12.8f, 40, 0.5f, playerShipTextureRegion, playerBulletTextureRegion);
-        enemyShip = new EnemyShip(WORLD_WIDTH / 2, WORLD_HEIGHT*5/6, 11.5f, 24, 5, 10, 2, 12.8f, 30, 0.8f, enemyShipTextureRegion, enemyBulletTextureRegion);
         batch = new SpriteBatch();
     }
 
@@ -60,13 +63,17 @@ public class GameScreen implements Screen {
         batch.begin();
         detectInput(deltaTime);
         playerShip.update(deltaTime);
-        enemyShip.update(deltaTime);
         renderBackground(deltaTime);
-        enemyShip.draw(batch);
+        spawnEnemies(deltaTime);
+        for (EnemyShip enemyShip : enemyShips) {
+            enemyShip.update(deltaTime);
+            moveEnemyShips(enemyShip, deltaTime);
+            enemyShip.draw(batch);
+        }
         playerShip.draw(batch);
         renderBullets(deltaTime);
-        renderEnemyShip(deltaTime);
         detectCollision();
+        renderExplosions(deltaTime);
         batch.end();
     }
 
@@ -90,9 +97,11 @@ public class GameScreen implements Screen {
             Bullet[] bullets = playerShip.fireBullets();
             Collections.addAll(playerBullets, bullets);
         }
-        if(enemyShip.canFireBullet()) {
-            Bullet[] bullets = enemyShip.fireBullets();
-            Collections.addAll(enemyBullets, bullets);
+        for (EnemyShip enemyShip : enemyShips) {
+            if (enemyShip.canFireBullet()) {
+                Bullet[] bullets = enemyShip.fireBullets();
+                Collections.addAll(enemyBullets, bullets);
+            }
         }
 
         ListIterator<Bullet> iterator = playerBullets.listIterator();
@@ -119,9 +128,19 @@ public class GameScreen implements Screen {
         ListIterator<Bullet> iterator = playerBullets.listIterator();
         while (iterator.hasNext()) {
             Bullet bullet = iterator.next();
-            if (enemyShip.intersects(bullet.boundingBox)) {
-                enemyShip.hit(bullet);
-                iterator.remove();
+            ListIterator<EnemyShip> enemyShipListIterator = enemyShips.listIterator();
+            while(enemyShipListIterator.hasNext()) {
+                EnemyShip enemyShip = enemyShipListIterator.next();
+                if (enemyShip.intersects(bullet.boundingBox)) {
+                    enemyShip.hit(bullet);
+                    System.out.println("Enemy hit: " + enemyShip.health);
+                    if (enemyShip.health <= 0) {
+                        Rectangle temp = enemyShip.boundingBox;
+                        explosions.add(new Explosion(new Rectangle(temp.x - temp.width * 0.4f, temp.y + temp.height * 0.4f, 20, 20), 0.75f));
+                        enemyShipListIterator.remove();
+                    }
+                    iterator.remove();
+                }
             }
         }
         iterator = enemyBullets.listIterator();
@@ -130,6 +149,19 @@ public class GameScreen implements Screen {
             if (playerShip.intersects(bullet.boundingBox)) {
                 playerShip.hit(bullet);
                 iterator.remove();
+            }
+        }
+    }
+
+    private void renderExplosions(float deltaTime) {
+        ListIterator<Explosion> iterator = explosions.listIterator();
+        while(iterator.hasNext()) {
+            Explosion explosion = iterator.next();
+            explosion.update(deltaTime);
+            if(explosion.isFinished()) {
+                iterator.remove();
+            } else {
+                explosion.draw(batch);
             }
         }
     }
@@ -166,7 +198,15 @@ public class GameScreen implements Screen {
         }
     }
 
-    public void renderEnemyShip(float deltaTime) {
+    private void spawnEnemies(float deltaTime) {
+        enemySpawnTimer += deltaTime;
+        if(enemySpawnTimer > timeBetweenEnemySpawns && enemyShips.size() < maxEnemies){
+            enemyShips.add(new EnemyShip((WORLD_WIDTH-11.5f) * (float)Math.random(), WORLD_HEIGHT, 11.5f, 24, 5, 10, 2, 12.8f, 30, 0.8f, enemyShipTextureRegion, enemyBulletTextureRegion));
+            enemySpawnTimer = 0;
+        }
+    }
+
+    public void moveEnemyShips(EnemyShip enemyShip, float deltaTime) {
         enemyShip.boundingBox.setPosition(enemyShip.boundingBox.x, enemyShip.boundingBox.y - enemyShip.movementSpeed * deltaTime);
     }
 

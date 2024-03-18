@@ -48,7 +48,7 @@ abstract public class Ship {
     }
 
     public void hit(Bullet bullet) {
-        health--;
+        this.health--;
     }
 
     public void translate(float xChange, float yChange) {
