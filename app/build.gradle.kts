@@ -70,6 +70,12 @@ dependencies {
     "natives"("com.badlogicgames.gdx:gdx-platform:1.12.1:natives-armeabi-v7a")
     "natives"("com.badlogicgames.gdx:gdx-platform:1.12.1:natives-x86")
     "natives"("com.badlogicgames.gdx:gdx-platform:1.12.1:natives-x86_64")
+    implementation("com.badlogicgames.gdx:gdx-freetype:1.12.1")
+    "natives"("com.badlogicgames.gdx:gdx-freetype-platform:1.12.1:natives-armeabi-v7a")
+    "natives"("com.badlogicgames.gdx:gdx-freetype-platform:1.12.1:natives-arm64-v8a")
+    "natives"("com.badlogicgames.gdx:gdx-freetype-platform:1.12.1:natives-x86")
+    "natives"("com.badlogicgames.gdx:gdx-freetype-platform:1.12.1:natives-x86_64")
+
 }
 
 val copyAndroidNatives = tasks.register("copyAndroidNatives") {
