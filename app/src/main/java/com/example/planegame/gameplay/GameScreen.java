@@ -172,7 +172,7 @@ public class GameScreen implements Screen {
         ListIterator<EnemyShip> enemyShipIterator = enemyShips.listIterator();
         while (enemyShipIterator.hasNext()) {
             EnemyShip enemyShip = enemyShipIterator.next();
-            if (playerShip.intersects(enemyShip.boundingBox) || (enemyShip.boundingBox.y - enemyShip.boundingBox.height <= 0)) {
+            if (playerShip.intersects(enemyShip.boundingBox) || (enemyShip.boundingBox.y <= 0)) {
                 Rectangle temp = enemyShip.boundingBox;
                 explosions.add(new Explosion(new Rectangle(temp.x - temp.width * 0.4f, temp.y + temp.height * 0.4f, 20, 20), 0.75f, textureAtlas));
                 enemyShipIterator.remove();
