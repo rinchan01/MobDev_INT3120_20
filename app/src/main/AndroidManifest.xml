@@ -36,6 +36,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.example.planegame.gameplay.AndroidLauncher"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout"
+            android:exported="false">
+        </activity>
         <service android:name=".MusicService"/>
     </application>
 

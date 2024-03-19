@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.planegame.gameplay.AndroidLauncher
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,6 +18,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         preferenceHelper = PreferenceHelper(this)
+        findViewById<Button>(R.id.startGameButton).setOnClickListener {
+            startActivity(Intent(this, AndroidLauncher::class.java))
+        }
+
         val leaderboard = findViewById<Button>(R.id.leaderboardButton)
         leaderboard.setOnClickListener {
             val intent = Intent(this, LeaderboardActivity::class.java)
