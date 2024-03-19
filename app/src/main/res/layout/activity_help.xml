@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg">
+    android:background="@drawable/bg2">
 
     <ImageView
         android:id="@+id/ivBack"
@@ -22,15 +22,16 @@
 
     <TextView
         android:id="@+id/howtoplay"
-        android:layout_width="217dp"
-        android:layout_height="85dp"
-        android:layout_marginTop="96dp"
+        android:layout_width="298dp"
+        android:layout_height="92dp"
+        android:layout_marginTop="104dp"
         android:text="How to play"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/white"
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.646"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
