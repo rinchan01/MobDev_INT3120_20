@@ -54,6 +54,7 @@
         android:backgroundTint="@color/white"
         android:textColor="@color/white"
         android:hint="Your username"
+        android:textColorHint="@color/white"
         app:layout_constraintStart_toStartOf="@id/textViewForUsername"
         app:layout_constraintTop_toBottomOf="@id/textViewForUsername" />
 
