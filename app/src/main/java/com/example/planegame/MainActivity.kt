@@ -42,6 +42,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
+        findViewById<Button>(R.id.logoutButton).setOnClickListener {
+            preferenceHelper.clear()
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
+
         findViewById<TextView>(R.id.welcome).text = "Hello ${preferenceHelper.getUsername()}"
 
     }
