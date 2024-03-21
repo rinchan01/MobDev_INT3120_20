@@ -10,6 +10,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
@@ -22,11 +23,11 @@ import java.util.HashMap;
 public class UserProvider extends ContentProvider {
     static final String AUTHORITY = "com.example.planegame.provider";
 
-    static final String URL = "content://" + AUTHORITY + "/user";
+    static final String URL = "content://" + AUTHORITY + "/users";
     public static final Uri URI = Uri.parse(URL);
     public static final String id = "id";
     public static final String name = "name";
-    public static final Integer score = 0;
+    public static final String score = "score";
     static final int uriCode = 1;
     static final UriMatcher uriMatcher;
 
@@ -61,7 +62,22 @@ public class UserProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-        return null;
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        qb.setTables(TABLE_NAME);
+        switch (uriMatcher.match(uri)) {
+            case uriCode:
+                qb.setProjectionMap(values);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI " + uri);
+        }
+        if (sortOrder == null || sortOrder == "") {
+            sortOrder = id;
+        }
+        Cursor c = qb.query(db, projection, selection, selectionArgs, null,
+                null, sortOrder);
+        c.setNotificationUri(getContext().getContentResolver(), uri);
+        return c;
     }
 
     @Nullable
@@ -86,11 +102,30 @@ public class UserProvider extends ContentProvider {
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+        int count = 0;
+        switch (uriMatcher.match(uri)) {
+            case uriCode:
+                count = db.delete(TABLE_NAME, selection, selectionArgs);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI " + uri);
+        }
+        getContext().getContentResolver().notifyChange(uri, null);
+        return count;
     }
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+
+        int count = 0;
+        switch (uriMatcher.match(uri)) {
+            case uriCode:
+                count = db.update(TABLE_NAME, values, selection, selectionArgs);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI " + uri);
+        }
+        getContext().getContentResolver().notifyChange(uri, null);
+        return count;
     }
 }

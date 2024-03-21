@@ -257,6 +257,7 @@ public class GameScreen implements Screen {
         if(playerShip.health <= 0) {
             hide();
             Intent intent = new Intent(this.parentContext, GameResultActivity.class);
+            intent.putExtra("score", score);
             this.parentContext.startActivity(intent);
         }
     }
