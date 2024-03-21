@@ -15,7 +15,7 @@ class GameResultActivity : AppCompatActivity() {
     @SuppressLint("Range")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_game_result)
+        setContentView(layout.activity_game_result)
 
         val score = intent.getIntExtra("score", 0)
         preferenceHelper = PreferenceHelper(this)
