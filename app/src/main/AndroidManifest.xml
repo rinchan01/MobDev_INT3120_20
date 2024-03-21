@@ -46,6 +46,12 @@
             android:screenOrientation="portrait"></activity>
 
         <service android:name=".MusicService" />
+        <provider
+            android:name=".provider.UserProvider"
+            android:authorities="com.example.planegame.provider"
+            android:exported="false">
+        </provider>
+
     </application>
 
 </manifest>
