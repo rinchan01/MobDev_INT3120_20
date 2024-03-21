@@ -15,9 +15,7 @@ public class AndroidLauncher extends AndroidApplication {
         if (main != null) {
             main.dispose();
         }
-        main = new Main(this.getContext());
+        main = new Main(getApplicationContext());
         initialize(main, configuration);
     }
-
-
 }
