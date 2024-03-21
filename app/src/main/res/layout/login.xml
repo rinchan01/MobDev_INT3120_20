@@ -25,37 +25,36 @@
 
     <TextView
         android:id="@+id/gameName"
-        android:layout_width="327dp"
-        android:layout_height="214dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/mon_bold_italic"
         android:text="Plane Game!"
         android:textColor="@color/white"
-        android:textSize="80sp"
+        android:textSize="70sp"
         app:layout_constraintStart_toStartOf="@+id/welcome"
         app:layout_constraintTop_toBottomOf="@+id/welcome" />
 
     <TextView
         android:id="@+id/textViewForUsername"
-        android:layout_width="263dp"
+        android:layout_width="wrap_content"
         android:layout_height="51dp"
-        android:layout_constraintBottom_toTopOf="@id/username"
-        android:layout_constraintTop_toBottomOf="@id/gameName"
-        android:layout_constraintStart_toStartOf="@id/gameName"
         android:layout_marginTop="48dp"
+        app:layout_constraintTop_toBottomOf="@id/gameName"
+        app:layout_constraintStart_toStartOf="@id/gameName"
         android:fontFamily="@font/mon_italic"
         android:text="Type in your username:"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/gameName"
-        app:layout_constraintTop_toBottomOf="@+id/gameName" />
+         />
 
     <EditText
         android:id="@+id/username"
         android:layout_width="300dp"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
         android:backgroundTint="@color/white"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
+        android:hint="Your username"
+        android:textColorHint="@color/white"
         app:layout_constraintStart_toStartOf="@id/textViewForUsername"
         app:layout_constraintTop_toBottomOf="@id/textViewForUsername" />
 
@@ -63,11 +62,9 @@
         android:id="@+id/btnLogin"
         android:layout_width="300dp"
         android:layout_height="59dp"
-        android:layout_constraintBottom_toBottomOf="@id/gameName"
         android:layout_marginTop="20dp"
         android:text="Login"
         app:layout_constraintEnd_toEndOf="@+id/username"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/username"
         app:layout_constraintTop_toBottomOf="@+id/username" />
 
