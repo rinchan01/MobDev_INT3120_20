@@ -66,6 +66,11 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        val sharedPrefs = getSharedPreferences("SettingsPrefs", MODE_PRIVATE)
+        val isSwitchChecked = sharedPrefs.getBoolean("switchState", false)
+        if (isSwitchChecked) {
+            startService(Intent(applicationContext, MusicService::class.java))
+        }
     }
 
     @SuppressLint("Range")

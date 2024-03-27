@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -19,6 +20,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.example.planegame.GameResultActivity;
+import com.example.planegame.SettingsActivity;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -37,23 +39,28 @@ public class GameScreen implements Screen {
     private float backgroundMaxScrollingSpeed;
     private final int WORLD_WIDTH = 72;
     private final int WORLD_HEIGHT = 128;
+    private boolean playSoundEffect = SettingsActivity.Companion.getPlaySoundEffect();
     private int score = 0;
-    private int maxEnemies = 4;
+    private int maxEnemies = SettingsActivity.Companion.getHardMode();
     private final float TOUCH_MOVEMENT_THRESHOLD = 0.5f;
     private float timeBetweenEnemySpawns = 2f;
     private float enemySpawnTimer = 0;
+    private Sound explosionSound;
     BitmapFont font;
     private PlayerShip playerShip;
     private LinkedList<EnemyShip> enemyShips = new LinkedList<>();
     private LinkedList<Bullet> playerBullets = new LinkedList<>();
     private LinkedList<Bullet> enemyBullets = new LinkedList<>();
     private LinkedList<Explosion> explosions = new LinkedList<>();
+
     GameScreen(Context context) {
         System.out.println("GameScreen created!");
         camera = new OrthographicCamera();
         this.parentContext = context;
         System.out.println("Address:" + parentContext);
         viewport = new StretchViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
+
+        explosionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/explosion_1.wav"));
 
         backgrounds[0] = textureAtlas.findRegion("Starscape00");
         backgrounds[1] = textureAtlas.findRegion("Starscape01");
@@ -155,6 +162,7 @@ public class GameScreen implements Screen {
                         Rectangle temp = enemyShip.boundingBox;
                         score += 100;
                         explosions.add(new Explosion(new Rectangle(temp.x - temp.width * 0.4f, temp.y + temp.height * 0.4f, 20, 20), 0.75f, textureAtlas));
+                        playExplosionSound();
                         enemyShipListIterator.remove();
                     }
                     iterator.remove();
@@ -233,7 +241,7 @@ public class GameScreen implements Screen {
 
     private void spawnEnemies(float deltaTime) {
         enemySpawnTimer += deltaTime;
-        if(enemySpawnTimer > timeBetweenEnemySpawns && enemyShips.size() < maxEnemies){
+        if(enemySpawnTimer > timeBetweenEnemySpawns && enemyShips.size() <= maxEnemies){
             enemyShips.add(new EnemyShip((WORLD_WIDTH-11.5f) * (float)Math.random(), WORLD_HEIGHT + 12, 11.5f, 24, 5, 10, 2, 12.8f, 30, 0.8f, enemyShipTextureRegion, enemyBulletTextureRegion));
             enemySpawnTimer = 0;
         }
@@ -259,6 +267,14 @@ public class GameScreen implements Screen {
             Intent intent = new Intent(this.parentContext, GameResultActivity.class);
             intent.putExtra("score", score);
             this.parentContext.startActivity(intent);
+        }
+    }
+
+    public void playExplosionSound() {
+        if(playSoundEffect) {
+            long id = explosionSound.play(0.5f);
+            explosionSound.setPitch(id, 2);
+            explosionSound.setLooping(id, false);
         }
     }
 
@@ -288,5 +304,9 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+        textureAtlas.dispose();
+        batch.dispose();
+        explosionSound.dispose();
+        font.dispose();
     }
 }

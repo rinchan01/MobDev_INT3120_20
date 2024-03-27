@@ -12,8 +12,10 @@ class MusicService :Service(){
     }
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         mediaPlayer = MediaPlayer.create(this, R.raw.sample_music)
-        mediaPlayer.isLooping = true
-        mediaPlayer.start()
+        if(!mediaPlayer.isPlaying) {
+            mediaPlayer.isLooping = true
+            mediaPlayer.start()
+        }
         return START_STICKY
     }
     override fun onDestroy() {
