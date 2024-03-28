@@ -245,7 +245,7 @@ public class GameScreen implements Screen {
                 && playerShip.boundingBox.y >= 0 && playerShip.boundingBox.y <= WORLD_HEIGHT - playerShip.boundingBox.height) {
             playerShip.translate(AndroidLauncher.xchange, AndroidLauncher.ychange);
         } else {
-            float xChange = 0, yChange = 0;
+            float xChange = AndroidLauncher.xchange, yChange = AndroidLauncher.ychange;
             if(playerShip.boundingBox.x < 0)
                 xChange = AndroidLauncher.xchange > 0 ? AndroidLauncher.xchange : 0;
             if(playerShip.boundingBox.x > WORLD_WIDTH - playerShip.boundingBox.width)
