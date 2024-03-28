@@ -22,7 +22,7 @@ public class AndroidLauncher extends AndroidApplication implements SensorEventLi
             Log.d("Sensor", "No Accelerometer found");
         }
         else {
-            android.hardware.Sensor accelerometer = manager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);;
+            android.hardware.Sensor accelerometer = manager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
             manager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         }
         AndroidApplicationConfiguration configuration = new AndroidApplicationConfiguration();
@@ -44,9 +44,9 @@ public class AndroidLauncher extends AndroidApplication implements SensorEventLi
             xchange = -0.2f;
         }
         if (x > 0) {
-            ychange = 0.2f;
-        } else if (x < 0) {
             ychange = -0.2f;
+        } else if (x < 0) {
+            ychange = 0.2f;
         }
     }
 
