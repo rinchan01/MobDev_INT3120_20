@@ -19,7 +19,8 @@ class MusicService :Service(){
         return START_STICKY
     }
     override fun onDestroy() {
-        super.onDestroy()
         mediaPlayer.stop()
+        mediaPlayer.release()
+        super.onDestroy()
     }
 }
