@@ -1,7 +1,16 @@
 package com.example.planegame.gameplay;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
+import static java.sql.DriverManager.println;
+
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.util.Log;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -52,6 +61,8 @@ public class GameScreen implements Screen {
     private LinkedList<Bullet> playerBullets = new LinkedList<>();
     private LinkedList<Bullet> enemyBullets = new LinkedList<>();
     private LinkedList<Explosion> explosions = new LinkedList<>();
+    private SensorManager manager;
+    SensorEventListener listener;
 
     GameScreen(Context context) {
         System.out.println("GameScreen created!");
@@ -61,6 +72,15 @@ public class GameScreen implements Screen {
         viewport = new StretchViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
 
         explosionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/explosion_1.wav"));
+
+//        manager = (SensorManager) context.getSystemService(context.SENSOR_SERVICE);
+//        if (manager.getDefaultSensor(android.hardware.Sensor.TYPE_GYROSCOPE) == null) {
+//            Log.d("Sensor", "No Accelerometer found");
+//        }
+//        else {
+//            android.hardware.Sensor accelerometer = manager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);;
+//            manager.registerListener((SensorEventListener) context, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+//        }
 
         backgrounds[0] = textureAtlas.findRegion("Starscape00");
         backgrounds[1] = textureAtlas.findRegion("Starscape01");
@@ -208,11 +228,15 @@ public class GameScreen implements Screen {
     }
 
     public void detectInput(float deltaTime) {
+
         float leftLimit, rightLimit, upLimit, downLimit;
         leftLimit = -playerShip.boundingBox.x;
         downLimit = -playerShip.boundingBox.y;
         rightLimit = WORLD_WIDTH - playerShip.boundingBox.x - playerShip.boundingBox.width;
         upLimit = WORLD_HEIGHT/2 - playerShip.boundingBox.y - playerShip.boundingBox.height;
+
+
+
 
         if(Gdx.input.isTouched()) {
             float xTouch = Gdx.input.getX();
@@ -236,6 +260,9 @@ public class GameScreen implements Screen {
                 else yMove = Math.max(yMove, downLimit);
                 playerShip.translate(xMove, yMove);
             }
+        }
+        if(playerShip.boundingBox.x > 1 && (playerShip.boundingBox.x + playerShip.boundingBox.width) < 71) {
+            playerShip.translate(AndroidLauncher.ychange, 0);
         }
     }
 
@@ -309,4 +336,6 @@ public class GameScreen implements Screen {
         explosionSound.dispose();
         font.dispose();
     }
+
+
 }
