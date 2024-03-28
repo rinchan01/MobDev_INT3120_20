@@ -38,12 +38,16 @@ public class AndroidLauncher extends AndroidApplication implements SensorEventLi
     public void onSensorChanged(SensorEvent event) {
         float x = event.values[0];
         float y = event.values[1];
-        float z = event.values[2];
         if (y > 0) {
+            xchange = 0.2f;
+        } else if (y < 0) {
+            xchange = -0.2f;
+        }
+        if (x > 0) {
             ychange = 0.2f;
-        } else if (y < 0) { ychange = -0.2f; }
-        Log.d("tag: ", x + " " + y + " " + z + " ");
-//        playerShip.translate(yChange, 0);
+        } else if (x < 0) {
+            ychange = -0.2f;
+        }
     }
 
     @Override
