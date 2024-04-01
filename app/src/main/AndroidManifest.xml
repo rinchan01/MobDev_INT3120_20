@@ -5,6 +5,9 @@
     <uses-feature
         android:name="android.hardware.sensor.accelerometer"
         android:required="true" />
+
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -49,14 +52,9 @@
             android:name=".gameplay.AndroidLauncher"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout"
             android:exported="false"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <service android:name=".MusicService" />
-        <provider
-            android:name=".provider.UserProvider"
-            android:authorities="com.example.planegame.provider"
-            android:exported="false">
-        </provider>
 
     </application>
 

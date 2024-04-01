@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.example.planegame.GameResultActivity;
 import com.example.planegame.SettingsActivity;
+import com.example.planegame.ShopActivity;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -70,11 +71,12 @@ public class GameScreen implements Screen {
 
         backgroundMaxScrollingSpeed = (float) (WORLD_HEIGHT) / 4;
 
-        playerShipTextureRegion = textureAtlas.findRegion("ship6_slice");
-        playerBulletTextureRegion = textureAtlas.findRegion("shot61_slice");
+        int currentSkinIdx = ShopActivity.Companion.getSkinIdx() + 1;
+        playerShipTextureRegion = textureAtlas.findRegion("ship" + currentSkinIdx);
+        playerBulletTextureRegion = textureAtlas.findRegion("bullet6");
 
-        enemyShipTextureRegion = textureAtlas.findRegion("ship4slice");
-        enemyBulletTextureRegion = textureAtlas.findRegion("shot5slice");
+        enemyShipTextureRegion = textureAtlas.findRegion("ship4");
+        enemyBulletTextureRegion = textureAtlas.findRegion("bullet5");
         enemyShipTextureRegion.flip(false, true);
 
         playerShip = new PlayerShip(WORLD_WIDTH / 2, WORLD_HEIGHT/4, 15, 23.4f, 30, 20, 2, 12.8f, 40, 0.5f, playerShipTextureRegion, playerBulletTextureRegion);

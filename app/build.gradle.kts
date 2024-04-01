@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -23,6 +25,10 @@ android {
             isEnable = true
             isUniversalApk = true
         }
+    }
+
+    buildFeatures {
+        dataBinding = true
     }
 
     buildTypes {
@@ -59,12 +65,17 @@ dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
-    implementation ("androidx.constraintlayout:constraintlayout:2.0.4")
+    implementation("androidx.constraintlayout:constraintlayout:2.0.4")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
     implementation("com.badlogicgames.gdx:gdx:1.12.1")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("androidx.room:room-ktx:2.5.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
+    ksp("androidx.room:room-compiler:2.5.2")
     implementation("com.badlogicgames.gdx:gdx-backend-android:1.12.1")
     "natives"("com.badlogicgames.gdx:gdx-platform:1.12.1:natives-arm64-v8a")
     "natives"("com.badlogicgames.gdx:gdx-platform:1.12.1:natives-armeabi-v7a")
