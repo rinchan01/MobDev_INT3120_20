@@ -2,11 +2,19 @@ package com.example.planegame
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.example.planegame.gameplay.AndroidLauncher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
@@ -43,10 +51,23 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.logoutButton).setOnClickListener {
             preferenceHelper.clear()
+            getSharedPreferences("SettingsPrefs", MODE_PRIVATE).edit().clear().apply()
             startActivity(Intent(this, LoginActivity::class.java))
         }
 
         findViewById<TextView>(R.id.welcome).text = "Hello ${preferenceHelper.getUsername()}"
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            val defaultAvatarFileName = "defaultAvatar.png"
+            val file = File(filesDir, defaultAvatarFileName)
+            if(!file.exists()) {
+                val drawable = ContextCompat.getDrawable(this@MainActivity, R.drawable.avt1)
+                val bmp = (drawable as BitmapDrawable).bitmap
+                openFileOutput(defaultAvatarFileName, MODE_PRIVATE).use {
+                    bmp.compress(Bitmap.CompressFormat.PNG, 90, it)
+                }
+            }
+        }
 
     }
 }

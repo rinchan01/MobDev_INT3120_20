@@ -1,17 +1,22 @@
 package com.example.planegame
 
 import android.annotation.SuppressLint
-import android.content.ContentValues
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import com.example.planegame.provider.UserProvider
+import androidx.lifecycle.lifecycleScope
+import com.example.planegame.database.PlayerDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class GameResultActivity : AppCompatActivity() {
 
     private lateinit var preferenceHelper: PreferenceHelper
+    private val playerDao by lazy {
+        PlayerDatabase.getDatabase(this).playerDao
+    }
     @SuppressLint("Range")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,21 +27,13 @@ class GameResultActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.textView2).text = "Your score: " + score
 
-        val selection = "name = ?"
-        val selectionArgs = arrayOf(preferenceHelper.getUsername())
-        val projection = arrayOf(UserProvider.id, UserProvider.name, UserProvider.score)
-        val cursor = contentResolver.query(UserProvider.URI, projection, selection, selectionArgs, null)
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                val highscore = cursor?.getInt(cursor.getColumnIndex("score"))
-                if(highscore!! < score) {
-                    val values = ContentValues()
-                    values.put(UserProvider.score, score)
-                    contentResolver.update(UserProvider.URI, values, selection, selectionArgs)
-                }
+        lifecycleScope.launch(Dispatchers.IO) {
+            val player = playerDao.getPlayer(preferenceHelper.getUsername())
+            if (player != null && player.highScore < score) {
+                val newPlayer = player.copy(highScore = score, coins = player.coins + score)
+                playerDao.upsertPlayer(newPlayer)
             }
         }
-        cursor?.close()
 
         findViewById<Button>(R.id.buttonBackToMenu).setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
