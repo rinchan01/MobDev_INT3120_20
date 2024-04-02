@@ -36,7 +36,7 @@ public class GameScreen implements Screen {
     private SpriteBatch batch;
     public TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("game_assets/game_assets.atlas"));
     private TextureRegion[] backgrounds = new TextureRegion[4];
-    private TextureRegion playerShipTextureRegion, enemyShipTextureRegion, enemyBulletTextureRegion, playerBulletTextureRegion;
+    private TextureRegion playerShipTextureRegion, enemyShipTextureRegion, enemyBulletTextureRegion, playerBulletTextureRegion, enemyShip2TextureRegion, enemyBullet2TextureRegion;
     private float[] backgroundOffsets = {0, 0, 0, 0};
     private float backgroundMaxScrollingSpeed;
     private final int WORLD_WIDTH = 72;
@@ -46,7 +46,7 @@ public class GameScreen implements Screen {
     private int maxEnemies = SettingsActivity.Companion.getHardMode();
     private final float TOUCH_MOVEMENT_THRESHOLD = 0.5f;
     private float timeBetweenEnemySpawns = 2f;
-    private float enemySpawnTimer = 0;
+    private float enemySpawnTimer = 0, enemySpawnTimer2 = 0;
     private Sound explosionSound;
     BitmapFont font;
     private PlayerShip playerShip;
@@ -77,6 +77,9 @@ public class GameScreen implements Screen {
 
         enemyShipTextureRegion = textureAtlas.findRegion("ship4");
         enemyBulletTextureRegion = textureAtlas.findRegion("bullet5");
+        enemyShip2TextureRegion = textureAtlas.findRegion("ship1");
+        enemyBullet2TextureRegion = textureAtlas.findRegion("shottype2");
+        enemyShip2TextureRegion.flip(false, true);
         enemyShipTextureRegion.flip(false, true);
 
         playerShip = new PlayerShip(WORLD_WIDTH / 2, WORLD_HEIGHT/4, 15, 23.4f, 30, 20, 2, 12.8f, 40, 0.5f, playerShipTextureRegion, playerBulletTextureRegion);
@@ -146,6 +149,16 @@ public class GameScreen implements Screen {
             Bullet bullet = iterator.next();
             bullet.draw(batch);
             bullet.boundingBox.y -= bullet.movementSpeed * deltaTime;
+            if(bullet.type == 2 || bullet.type == 3) {
+                int xMovementSpeed = (int) bullet.movementSpeed - 10;
+                if(bullet.type == 2) {
+                    bullet.boundingBox.x += xMovementSpeed * deltaTime;
+                    if(bullet.boundingBox.x + bullet.boundingBox.width >= WORLD_WIDTH) bullet.type = 3;
+                }else{
+                    bullet.boundingBox.x -= xMovementSpeed * deltaTime;
+                    if(bullet.boundingBox.x <= 0) bullet.type = 2;
+                }
+            }
             if(bullet.boundingBox.y + bullet.boundingBox.height < 0) {
                 iterator.remove();
             }
@@ -262,9 +275,21 @@ public class GameScreen implements Screen {
 
     private void spawnEnemies(float deltaTime) {
         enemySpawnTimer += deltaTime;
-        if(enemySpawnTimer > timeBetweenEnemySpawns && enemyShips.size() <= maxEnemies){
-            enemyShips.add(new EnemyShip((WORLD_WIDTH-11.5f) * (float)Math.random(), WORLD_HEIGHT + 12, 11.5f, 24, 5, 10, 2, 12.8f, 30, 0.8f, enemyShipTextureRegion, enemyBulletTextureRegion));
+        enemySpawnTimer2 += deltaTime;
+        int maxEnemyShip2 = maxEnemies - 2, timeBetweenEnemy2Spawns = (int) timeBetweenEnemySpawns + 1, enemy1 = 0, enemy2 = 0;
+        for(EnemyShip enemyShip : enemyShips) {
+            if(enemyShip.type == 1) enemy1++;
+            else enemy2++;
+        }
+        if(enemySpawnTimer > timeBetweenEnemySpawns && enemy1 <= maxEnemies){
+            enemyShips.add(new EnemyShip((WORLD_WIDTH-11.5f) * (float)Math.random(), WORLD_HEIGHT + 12, 11.5f, 24, 5, 10, 2, 12.8f, 30, 0.8f, enemyShipTextureRegion, enemyBulletTextureRegion, 1));
             enemySpawnTimer = 0;
+        }
+        if(maxEnemies == 3 || maxEnemies == 4) {
+            if(enemySpawnTimer2 > timeBetweenEnemy2Spawns && enemy2 < maxEnemyShip2) {
+                enemyShips.add(new EnemyShip((WORLD_WIDTH - 11.5f) * (float) Math.random(), WORLD_HEIGHT + 12, 11.5f, 24, 5, 10, 4, 4, 30, 1f, enemyShip2TextureRegion, enemyBullet2TextureRegion, 2));
+                enemySpawnTimer2 = 0;
+            }
         }
     }
 

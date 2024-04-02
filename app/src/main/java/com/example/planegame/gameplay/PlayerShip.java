@@ -13,10 +13,10 @@ public class PlayerShip extends Ship{
     public Bullet[] fireBullets() {
         Bullet[] bullets = new Bullet[2];
         bullets[0] = new Bullet(boundingBox.x+ boundingBox.width*0.3f, boundingBox.y+boundingBox.height*0.45f,
-            bulletWidth, bulletHeight, bulletSpeed, bulletTextureRegion);
+            bulletWidth, bulletHeight, bulletSpeed, bulletTextureRegion, 1);
 
         bullets[1] = new Bullet(boundingBox.x + boundingBox.width*0.7f, boundingBox.y + boundingBox.height*0.45f,
-            bulletWidth, bulletHeight, bulletSpeed, bulletTextureRegion);
+            bulletWidth, bulletHeight, bulletSpeed, bulletTextureRegion, 1);
 
         timeSinceLastShot = 0;
         return bullets;
