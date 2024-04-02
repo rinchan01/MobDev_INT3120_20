@@ -29,8 +29,9 @@ class GameResultActivity : AppCompatActivity() {
 
         lifecycleScope.launch(Dispatchers.IO) {
             val player = playerDao.getPlayer(preferenceHelper.getUsername())
-            if (player != null && player.highScore < score) {
-                val newPlayer = player.copy(highScore = score, coins = player.coins + score)
+            if (player != null) {
+                val newScore = if(player.highScore < score) score else player.highScore
+                val newPlayer = player.copy(highScore = newScore, coins = player.coins + score / 10)
                 playerDao.upsertPlayer(newPlayer)
             }
         }

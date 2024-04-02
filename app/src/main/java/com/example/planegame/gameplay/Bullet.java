@@ -19,5 +19,4 @@ public class Bullet {
     public void draw(Batch batch) {
         batch.draw(bulletTexture, boundingBox.x, boundingBox.y, boundingBox.width, boundingBox.height);
     }
-
 }

@@ -330,6 +330,4 @@ public class GameScreen implements Screen {
         explosionSound.dispose();
         font.dispose();
     }
-
-
 }
