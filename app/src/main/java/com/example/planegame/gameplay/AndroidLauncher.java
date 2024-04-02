@@ -42,11 +42,15 @@ public class AndroidLauncher extends AndroidApplication implements SensorEventLi
             xchange = 0.2f;
         } else if (y < 0) {
             xchange = -0.2f;
+        } else {
+            xchange = 0;
         }
         if (x > 0) {
             ychange = -0.2f;
         } else if (x < 0) {
             ychange = 0.2f;
+        } else {
+            ychange = 0;
         }
     }
 

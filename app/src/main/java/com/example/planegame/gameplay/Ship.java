@@ -1,6 +1,7 @@
 package com.example.planegame.gameplay;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
@@ -39,7 +40,7 @@ abstract public class Ship {
 
     public abstract Bullet[] fireBullets();
 
-    public void draw(Batch batch) {
+    public void draw(SpriteBatch batch) {
         batch.draw(shipTextureRegion, boundingBox.x, boundingBox.y, boundingBox.width, boundingBox.height);
     }
 
@@ -49,9 +50,5 @@ abstract public class Ship {
 
     public void hit(Bullet bullet) {
         this.health--;
-    }
-
-    public void translate(float xChange, float yChange) {
-        boundingBox.setPosition(boundingBox.x + xChange, boundingBox.y + yChange);
     }
 }
