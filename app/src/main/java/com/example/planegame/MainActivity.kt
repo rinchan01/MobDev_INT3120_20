@@ -6,9 +6,14 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
+import android.widget.SearchView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.planegame.gameplay.AndroidLauncher
@@ -41,19 +46,19 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        findViewById<Button>(R.id.shopButton).setOnClickListener {
-            startActivity(Intent(this, ShopActivity::class.java))
-        }
-
-        findViewById<Button>(R.id.settingButton).setOnClickListener {
-            startActivity(Intent(this, SettingsActivity::class.java))
-        }
-
-        findViewById<Button>(R.id.logoutButton).setOnClickListener {
-            preferenceHelper.clear()
-            getSharedPreferences("SettingsPrefs", MODE_PRIVATE).edit().clear().apply()
-            startActivity(Intent(this, LoginActivity::class.java))
-        }
+//        findViewById<Button>(R.id.shopButton).setOnClickListener {
+//            startActivity(Intent(this, ShopActivity::class.java))
+//        }
+//
+//        findViewById<Button>(R.id.settingButton).setOnClickListener {
+//            startActivity(Intent(this, SettingsActivity::class.java))
+//        }
+//
+//        findViewById<Button>(R.id.logoutButton).setOnClickListener {
+//            preferenceHelper.clear()
+//            getSharedPreferences("SettingsPrefs", MODE_PRIVATE).edit().clear().apply()
+//            startActivity(Intent(this, LoginActivity::class.java))
+//        }
 
         findViewById<TextView>(R.id.welcome).text = "Hello ${preferenceHelper.getUsername()}"
 
@@ -69,5 +74,25 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.option_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        when (id) {
+            R.id.shop -> startActivity(Intent(this, ShopActivity::class.java))
+            R.id.settings -> startActivity(Intent(this, SettingsActivity::class.java))
+            R.id.logout -> {
+                preferenceHelper.clear()
+                getSharedPreferences("SettingsPrefs", MODE_PRIVATE).edit().clear().apply()
+                startActivity(Intent(this, LoginActivity::class.java))
+            }
+            else -> {}
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
