@@ -7,7 +7,7 @@ import com.example.planegame.ShopActivity.Skin
 class SkinShopViewModel: ViewModel() {
     private var skins = MutableLiveData<MutableList<Skin>>()
     val skinsLiveData: MutableLiveData<MutableList<Skin>> get() = skins
-    private val coins = MutableLiveData<Int>(0)
+    private val coins = MutableLiveData(0)
     val coinsLiveData: MutableLiveData<Int> get() = coins
 
     init {

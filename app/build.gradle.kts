@@ -75,7 +75,6 @@ dependencies {
     implementation("androidx.room:room-ktx:2.5.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
-    implementation("androidx.webkit:webkit:1.8.0")
     ksp("androidx.room:room-compiler:2.5.2")
     implementation("com.badlogicgames.gdx:gdx-backend-android:1.12.1")
     "natives"("com.badlogicgames.gdx:gdx-platform:1.12.1:natives-arm64-v8a")
@@ -87,7 +86,6 @@ dependencies {
     "natives"("com.badlogicgames.gdx:gdx-freetype-platform:1.12.1:natives-arm64-v8a")
     "natives"("com.badlogicgames.gdx:gdx-freetype-platform:1.12.1:natives-x86")
     "natives"("com.badlogicgames.gdx:gdx-freetype-platform:1.12.1:natives-x86_64")
-
 }
 
 val copyAndroidNatives = tasks.register("copyAndroidNatives") {

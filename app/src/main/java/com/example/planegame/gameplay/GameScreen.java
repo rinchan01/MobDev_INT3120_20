@@ -30,11 +30,11 @@ import java.util.ListIterator;
 import java.util.Locale;
 
 public class GameScreen implements Screen {
-    private Camera camera;
-    private Viewport viewport;
+    private final Camera camera;
+    private final Viewport viewport;
     private Context parentContext;
-    private SpriteBatch batch;
-    public TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("game_assets/game_assets.atlas"));
+    private final SpriteBatch batch;
+    public final TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("game_assets/game_assets.atlas"));
     private TextureRegion[] backgrounds = new TextureRegion[4];
     private TextureRegion playerShipTextureRegion, enemyShipTextureRegion, enemyBulletTextureRegion, playerBulletTextureRegion, enemyShip2TextureRegion, enemyBullet2TextureRegion;
     private float[] backgroundOffsets = {0, 0, 0, 0};
@@ -56,10 +56,8 @@ public class GameScreen implements Screen {
     private LinkedList<Explosion> explosions = new LinkedList<>();
 
     GameScreen(Context context) {
-        System.out.println("GameScreen created!");
         camera = new OrthographicCamera();
         this.parentContext = context;
-        System.out.println("Address:" + parentContext);
         viewport = new StretchViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
 
         explosionSound = Gdx.audio.newSound(Gdx.files.internal("sounds/explosion_1.wav"));
@@ -82,7 +80,7 @@ public class GameScreen implements Screen {
         enemyShip2TextureRegion.flip(false, true);
         enemyShipTextureRegion.flip(false, true);
 
-        playerShip = new PlayerShip(WORLD_WIDTH / 2, WORLD_HEIGHT/4, 15, 23.4f, 30, 20, 2, 12.8f, 40, 0.5f, playerShipTextureRegion, playerBulletTextureRegion);
+        playerShip = new PlayerShip(WORLD_WIDTH / 2, WORLD_HEIGHT/4, 15, 23.4f, 30, 20, 2, 12.8f, 40, 0.5f, playerShipTextureRegion, playerBulletTextureRegion, textureAtlas);
         batch = new SpriteBatch();
         prepareHUD();
     }
@@ -177,7 +175,7 @@ public class GameScreen implements Screen {
                     if (enemyShip.health <= 0) {
                         Rectangle temp = enemyShip.boundingBox;
                         score += 100;
-                        explosions.add(new Explosion(new Rectangle(temp.x - temp.width * 0.4f, temp.y + temp.height * 0.4f, 20, 20), 0.75f, textureAtlas));
+                        explosions.add(new Explosion(new Rectangle(temp.x - temp.width * 0.4f, temp.y + temp.height * 0.4f, 20, 20), 0.75f, textureAtlas, "explosion"));
                         playExplosionSound();
                         enemyShipListIterator.remove();
                     }
@@ -198,7 +196,7 @@ public class GameScreen implements Screen {
             EnemyShip enemyShip = enemyShipIterator.next();
             if (playerShip.intersects(enemyShip.boundingBox) || (enemyShip.boundingBox.y <= 0)) {
                 Rectangle temp = enemyShip.boundingBox;
-                explosions.add(new Explosion(new Rectangle(temp.x - temp.width * 0.4f, temp.y + temp.height * 0.4f, 20, 20), 0.75f, textureAtlas));
+                explosions.add(new Explosion(new Rectangle(temp.x - temp.width * 0.4f, temp.y + temp.height * 0.4f, 20, 20), 0.75f, textureAtlas, "explosion"));
                 enemyShipIterator.remove();
                 playerShip.health -= 5;
             }
