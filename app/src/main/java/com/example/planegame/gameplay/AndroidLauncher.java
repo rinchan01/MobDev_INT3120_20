@@ -19,11 +19,11 @@ public class AndroidLauncher extends AndroidApplication implements SensorEventLi
         super.onCreate(savedInstanceState);
         manager = (SensorManager) this.getSystemService(this.SENSOR_SERVICE);
         if (manager.getDefaultSensor(android.hardware.Sensor.TYPE_GYROSCOPE) == null) {
-            Log.d("Sensor", "No Accelerometer found");
+            Log.d("Sensor", "No Gyroscrope found");
         }
         else {
-            android.hardware.Sensor accelerometer = manager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-            manager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+            android.hardware.Sensor gyro = manager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+            manager.registerListener(this, gyro, 1000000);
         }
         AndroidApplicationConfiguration configuration = new AndroidApplicationConfiguration();
         configuration.useImmersiveMode = true;
@@ -39,14 +39,14 @@ public class AndroidLauncher extends AndroidApplication implements SensorEventLi
         float x = event.values[0];
         float y = event.values[1];
         if (y > 0) {
-            xchange = 0.2f;
+            xchange = 0.4f;
         } else if (y < 0) {
-            xchange = -0.2f;
+            xchange = -0.4f;
         }
         if (x > 0) {
-            ychange = -0.2f;
+            ychange = -0.4f;
         } else if (x < 0) {
-            ychange = 0.2f;
+            ychange = 0.4f;
         }
     }
 
