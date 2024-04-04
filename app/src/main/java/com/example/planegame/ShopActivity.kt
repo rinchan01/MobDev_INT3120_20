@@ -37,7 +37,7 @@ class ShopActivity : ComponentActivity() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        adapter = SkinAdapter(this, viewModel.skinsLiveData.value!!)
+        adapter = SkinAdapter(this, viewModel.getSkinList())
         binding.skinList.adapter = adapter
         val playerName = PreferenceHelper(this@ShopActivity).getUsername()
 
@@ -49,11 +49,11 @@ class ShopActivity : ComponentActivity() {
             }
         }
 
-        viewModel.coinsLiveData.observe(this) { coins ->
+        viewModel.coins.observe(this) { coins ->
             binding.currentcoins.text = coins.toString()
         }
 
-        viewModel.skinsLiveData.observe(this) { skins ->
+        viewModel.skinList.observe(this) {
             adapter.notifyDataSetChanged()
         }
 
@@ -61,11 +61,11 @@ class ShopActivity : ComponentActivity() {
             .setTitle("Purchase Skin")
             .setMessage("Do you want to purchase this skin?")
             .setPositiveButton("Yes") { _, _ ->
-                if(viewModel.coinsLiveData.value!! >= viewModel.skinsLiveData.value!![idx].price.toInt()) {
-                    viewModel.updateCoins(viewModel.skinsLiveData.value!![idx].price.toInt())
+                if(viewModel.getCoins() >= viewModel.getSkinList()[idx].price.toInt()) {
+                    viewModel.updateCoins(viewModel.getSkinList()[idx].price.toInt())
                     lifecycleScope.launch(Dispatchers.IO) {
                         val player = playerDao.getPlayer(playerName)
-                        val newPlayer = player!!.copy(coins = viewModel.coinsLiveData.value!!, skins = player.skins + " ${idx + 1}")
+                        val newPlayer = player!!.copy(coins = viewModel.getCoins(), skins = player.skins + " ${idx + 1}")
                         playerDao.upsertPlayer(newPlayer)
                     }
                     adapter.updateData(idx)
@@ -76,12 +76,12 @@ class ShopActivity : ComponentActivity() {
             .setNegativeButton("No") { _, _ -> }
 
         val currentSkinIdx = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).getInt(PICK_SKIN_KEY, 5)
-        binding.currentSkin.setImageResource(viewModel.skinsLiveData.value!![currentSkinIdx].skinImg)
+        binding.currentSkin.setImageResource(viewModel.getSkinList()[currentSkinIdx].skinImg)
 
         binding.skinList.setOnItemClickListener { _, _, position, _ ->
             idx = position
-            if(viewModel.skinsLiveData.value!![idx].purchased) {
-                binding.currentSkin.setImageResource(viewModel.skinsLiveData.value!![idx].skinImg)
+            if(viewModel.getSkinList()[idx].purchased) {
+                binding.currentSkin.setImageResource(viewModel.getSkinList()[idx].skinImg)
                 getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).edit().putInt(PICK_SKIN_KEY, idx).apply()
                 skinIdx = idx
             }
