@@ -38,6 +38,8 @@ class LeaderboardActivity : AppCompatActivity() {
 
         myPagerAdapter = MyPagerAdapter(supportFragmentManager, lifecycle)
 
+
+
         lifecycleScope.launch(Dispatchers.IO) {
             playerDao.getLeaderboard().collectLatest { players ->
                 val leaderboardPlayers: List<LeaderBoardPlayer> = players.map {
@@ -119,7 +121,7 @@ class LeaderboardActivity : AppCompatActivity() {
 
         var result = FloatArray(3)
 
-        Location.distanceBetween(lat1, lon2, lat2, lon2, result)
+        Location.distanceBetween(lat1, lon1, lat2, lon2, result)
 
         return result[0]
     }
