@@ -37,54 +37,60 @@
         android:id="@+id/startGameButton"
         android:layout_width="296dp"
         android:layout_height="60dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="56dp"
         android:text="Start"
         app:layout_constraintStart_toStartOf="@+id/gameName"
         app:layout_constraintTop_toBottomOf="@+id/gameName" />
-    <Button
-        android:id="@+id/shopButton"
-        android:layout_width="296dp"
-        android:layout_height="60dp"
-        android:text="Shop"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/startGameButton"
-        app:layout_constraintEnd_toEndOf="@+id/startGameButton"
-        app:layout_constraintStart_toStartOf="@+id/startGameButton" />
+
     <Button
         android:id="@+id/leaderboardButton"
         android:layout_width="296dp"
         android:layout_height="60dp"
+        android:layout_marginTop="16dp"
         android:text="Leaderboard"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/shopButton"
         app:layout_constraintEnd_toEndOf="@+id/shopButton"
-        app:layout_constraintStart_toStartOf="@+id/shopButton" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/shopButton"
+        app:layout_constraintTop_toBottomOf="@+id/shopButton" />
 
     <Button
-        android:id="@+id/settingButton"
+        android:id="@+id/shopButton"
         android:layout_width="296dp"
         android:layout_height="60dp"
-        android:layout_marginTop="10dp"
-        android:text="Settings"
-        app:layout_constraintTop_toBottomOf="@+id/leaderboardButton"
-        app:layout_constraintEnd_toEndOf="@+id/leaderboardButton"
-        app:layout_constraintStart_toStartOf="@+id/leaderboardButton" />
+        android:layout_marginTop="20dp"
+        android:text="Shop"
+        app:layout_constraintEnd_toEndOf="@+id/startGameButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/startGameButton"
+        app:layout_constraintTop_toBottomOf="@+id/startGameButton" />
+
     <Button
         android:id="@+id/helpButton"
         android:layout_width="296dp"
         android:layout_height="60dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="12dp"
         android:text="Help"
-        app:layout_constraintTop_toBottomOf="@+id/settingButton"
-        app:layout_constraintEnd_toEndOf="@+id/settingButton"
-        app:layout_constraintStart_toStartOf="@+id/settingButton" />
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="296dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="10dp"
-        android:text="Logout"
-        app:layout_constraintTop_toBottomOf="@+id/helpButton"
-        app:layout_constraintEnd_toEndOf="@+id/helpButton"
-        app:layout_constraintStart_toStartOf="@+id/helpButton" />
+        app:layout_constraintEnd_toEndOf="@+id/leaderboardButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/leaderboardButton"
+        app:layout_constraintTop_toBottomOf="@+id/leaderboardButton" />
+
+    <!--    <Button-->
+<!--        android:id="@+id/settingButton"-->
+<!--        android:layout_width="296dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:text="Settings"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/leaderboardButton"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/leaderboardButton"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/leaderboardButton" />-->
+    <!--    <Button-->
+<!--        android:id="@+id/logoutButton"-->
+<!--        android:layout_width="296dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:text="Logout"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/helpButton"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/helpButton"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/helpButton" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>
