@@ -1,18 +1,20 @@
 package com.example.planegame
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.planegame.ShopActivity.Skin
 
 class SkinShopViewModel: ViewModel() {
-    private var skins = MutableLiveData<MutableList<Skin>>()
-    val skinsLiveData: MutableLiveData<MutableList<Skin>> get() = skins
-    private val coins = MutableLiveData(0)
-    val coinsLiveData: MutableLiveData<Int> get() = coins
+    private val _skinList = MutableLiveData<MutableList<Skin>>()
+    val skinList: LiveData<MutableList<Skin>> = _skinList
+
+    private val _coins = MutableLiveData<Int>()
+    val coins: LiveData<Int> = _coins
 
     init {
         val coinImgId = R.drawable.coin
-        skins.value = mutableListOf(
+        _skinList.value = mutableListOf(
             Skin(R.drawable.ship1, "20", coinImgId),
             Skin(R.drawable.ship2, "40", coinImgId),
             Skin(R.drawable.ship3, "60", coinImgId),
@@ -23,17 +25,25 @@ class SkinShopViewModel: ViewModel() {
     }
 
     fun setCoins(coins: Int) {
-        this.coins.value = coins
-    }
-
-    fun updateCoins(price: Int) {
-        coins.value = coins.value?.minus(price)
+        _coins.value = coins
     }
 
     fun updateSkin(idx: Int) {
-        val skin = skins.value!![idx]
-        val updatedSkins = skins.value!!
+        val skin = _skinList.value!![idx]
+        val updatedSkins = _skinList.value!!
         updatedSkins[idx] = skin.copy(purchased = true)
-        skins.value = updatedSkins
+        _skinList.value = updatedSkins
+    }
+
+    fun updateCoins(price: Int) {
+        _coins.value = _coins.value?.minus(price)
+    }
+
+    fun getSkinList(): MutableList<Skin> {
+        return _skinList.value ?: mutableListOf()
+    }
+
+    fun getCoins(): Int {
+        return _coins.value ?: 0
     }
 }

@@ -75,6 +75,7 @@ dependencies {
     implementation("androidx.room:room-ktx:2.5.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("com.google.android.gms:play-services-location:21.2.0")
     ksp("androidx.room:room-compiler:2.5.2")
     implementation("com.badlogicgames.gdx:gdx-backend-android:1.12.1")
     "natives"("com.badlogicgames.gdx:gdx-platform:1.12.1:natives-arm64-v8a")
