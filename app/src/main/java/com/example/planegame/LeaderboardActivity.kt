@@ -46,7 +46,21 @@ class LeaderboardActivity : AppCompatActivity() {
                     val bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
                     LeaderBoardPlayer(it.name, it.highScore, bmp)
                 }
-                val localPlayers = listOf<LeaderBoardPlayer>()
+                var defaultLocationString = "0.0, 0.0"
+                for(player in players) {
+                    if(player.name == getSharedPreferences("my_prefs", MODE_PRIVATE).getString("username", "")) {
+                        defaultLocationString = player.location
+                        break
+                    }
+                }
+                val localPlayers: List<LeaderBoardPlayer> = players
+                    .filter { distanceBetweenLocationStrings(it.location, defaultLocationString) < 10000}
+                    .map {
+                        val file = File(filesDir, it.avatarPath)
+                        val bytes = file.readBytes()
+                        val bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                        LeaderBoardPlayer(it.name, it.highScore, bmp)
+                    }
                 withContext(Dispatchers.Main) {
                     myPagerAdapter.addFragment(LeaderboardFragment(leaderboardPlayers))
                     myPagerAdapter.addFragment(LeaderboardFragment(localPlayers))
@@ -72,29 +86,6 @@ class LeaderboardActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        lifecycleScope.launch(Dispatchers.IO) {
-            playerDao.getLeaderboard().collectLatest { players ->
-                var defaultLocationString = "0.0, 0.0"
-                for(player in players) {
-                    if(player.name == getSharedPreferences("my_prefs", MODE_PRIVATE).getString("username", "")) {
-                        defaultLocationString = player.location
-                        break
-                    }
-                }
-                val localPlayers: List<LeaderBoardPlayer> = players
-                    .filter { distanceBetweenLocationStrings(it.location, defaultLocationString) < 10000}
-                    .map {
-                    val file = File(filesDir, it.avatarPath)
-                    val bytes = file.readBytes()
-                    val bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                    LeaderBoardPlayer(it.name, it.highScore, bmp)
-                }
-                withContext(Dispatchers.Main) {
-                    myPagerAdapter.updateFragment(LeaderboardFragment(localPlayers), 1)
-                    viewPager.adapter?.notifyItemChanged(1)
-                }
-            }
-        }
     }
 
     private class MyPagerAdapter(fm: FragmentManager, lc: Lifecycle) : FragmentStateAdapter(fm, lc) {
