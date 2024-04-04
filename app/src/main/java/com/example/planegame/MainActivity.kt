@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         when (id) {
-            R.id.shop -> startActivity(Intent(this, ShopActivity::class.java))
+//            R.id.shop -> startActivity(Intent(this, ShopActivity::class.java))
             R.id.settings -> startActivity(Intent(this, SettingsActivity::class.java))
             R.id.logout -> {
                 preferenceHelper.clear()
