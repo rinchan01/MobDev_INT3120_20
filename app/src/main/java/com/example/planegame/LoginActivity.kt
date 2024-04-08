@@ -42,7 +42,16 @@ class LoginActivity : AppCompatActivity() {
 
         preferenceHelper = PreferenceHelper(this)
         if (preferenceHelper.isLoggedIn()) {
+            val locationRequest = OneTimeWorkRequestBuilder<RetrieveLocationWorker>()
+                .build()
+
+            val changeBackground = OneTimeWorkRequestBuilder<SetWeatherBackgroundWorker>()
+                .build()
+
+            workManager.beginWith(locationRequest).then(changeBackground).enqueue()
+
             val toMain = Intent(this@LoginActivity, MainActivity::class.java)
+            toMain.putExtra("BackgroundWorkerID", changeBackground.id.toString())
             startActivity(toMain)
         }
 
@@ -57,12 +66,16 @@ class LoginActivity : AppCompatActivity() {
                     apply()
                 }
 
-                val request = OneTimeWorkRequestBuilder<RetrieveLocationWorker>()
+                val locationRequest = OneTimeWorkRequestBuilder<RetrieveLocationWorker>()
                     .build()
 
-                workManager.enqueue(request)
+                val changeBackground = OneTimeWorkRequestBuilder<SetWeatherBackgroundWorker>()
+                    .build()
+
+                workManager.beginWith(locationRequest).then(changeBackground).enqueue()
 
                 val toMain = Intent(this@LoginActivity, MainActivity::class.java)
+                toMain.putExtra("BackgroundWorkerID", changeBackground.id.toString())
                 startActivity(toMain)
             }
         }

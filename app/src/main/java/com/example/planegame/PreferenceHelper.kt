@@ -16,6 +16,10 @@ class PreferenceHelper(context: Context) {
         return sharedPreferences.getString("username", "") ?: ""
     }
 
+    fun getWeatherBackground() : String {
+        return sharedPreferences.getString("background", "bg2")!!
+    }
+
     fun clear() {
         with(sharedPreferences.edit()) {
             putBoolean("is_logged_in", false)
